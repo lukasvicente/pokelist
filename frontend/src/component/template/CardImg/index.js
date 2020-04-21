@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   cardMedia: {
-    paddingTop: '56.25%', // 16:9
+    paddingTop: '86.25%', // 16:9
+    backgroundColor:'#000'
   },
   cardContent: {
     flexGrow: 1,
@@ -54,8 +55,6 @@ export default function Album() {
  
     })
   },[]);
-
- 
    
   return (
     <React.Fragment>
@@ -70,18 +69,18 @@ export default function Album() {
                   <CardMedia
                     className={classes.cardMedia}
                     image={`https://pokeres.bastionbot.org/images/pokemon/${(character.url).split('/')[6]}.png`}
-                    title="Image title"
+                    title={character.name}
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                    {character.name}
+                    {(character.name).toUpperCase()}
                     </Typography>
                     <Typography>
-                    
+                    Description
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button variant="outlined" color="secondary">
                       Detail
                     </Button>
                     

@@ -3,11 +3,10 @@ import React from 'react';
 import AppBar from '../../component/template/AppBar';
 import CardImg from '../../component/template/CardImg';
 import Footer from '../../component/template/Footer';
+import Tabs from '../../component/template/Tabs';
 
 
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,10 +35,8 @@ function Home(){
         <div>
             <AppBar />
             <Container >
-                <Typography variant="h5" className={classes.title}>
-                    Personagens
-                </Typography>
-                <Divider className={classes.dividerTitle} />
+                <Tabs />
+                 
                 <CardImg /> 
             </Container>
             <Footer />
