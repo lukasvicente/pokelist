@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -80,9 +81,11 @@ export default function Album() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button variant="outlined" color="secondary">
-                      Detail
-                    </Button>
+                    <Link to={`/detail/${character.name}/${(character.url).split('/')[6]}`} style={{ textDecoration: 'none',color:"inherit" }}>
+                      <Button variant="outlined" color="secondary">
+                        Detail
+                      </Button>
+                    </Link>
                     
                   </CardActions>
                 </Card>

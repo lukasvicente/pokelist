@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,6 +14,7 @@ import Menu from '@material-ui/core/Menu';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    marginBottom:10
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -44,7 +47,7 @@ export default function MenuAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            PokeList
+            <Link to="/" style={{ textDecoration: 'none',color:"inherit" }}>PokeList</Link> 
           </Typography>
           {!auth && (
             <div>
