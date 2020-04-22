@@ -10,6 +10,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Divider from '@material-ui/core/Divider';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuAppBar() {
   const classes = useStyles();
-  const auth = localStorage.getItem('nameUser');
+  const auth = localStorage.getItem('token');
+  const name = localStorage.getItem('name');
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
  
@@ -38,6 +41,11 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const handleClear = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
   return (
     <div className={classes.root}>
  
@@ -46,11 +54,26 @@ export default function MenuAppBar() {
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
+          
           <Typography variant="h6" className={classes.title}>
             <Link to="/" style={{ textDecoration: 'none',color:"inherit" }}>PokeList</Link> 
           </Typography>
-          {!auth && (
+          
+          {auth ? (
+          <Typography variant="h6" >
+                Olá, {name}
+          </Typography>
+          ):(
+            <Button variant="outlined" color="inherit" >
+              <Link to="/login" style={{ textDecoration: 'none',color:"inherit" }}> 
+                Login
+              </Link>
+            </Button>
+          )}
+          {auth && (
+            
             <div>
+              
               <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -77,6 +100,8 @@ export default function MenuAppBar() {
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
+                <Divider />
+                <MenuItem onClick={handleClear}>Exit</MenuItem>
               </Menu>
             </div>
           )}

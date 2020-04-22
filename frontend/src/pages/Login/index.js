@@ -1,4 +1,6 @@
-import React from 'react';
+import React,{ useState } from 'react';
+import  { useHistory } from 'react-router-dom';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -13,18 +15,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import Footer from '../../component/template/Footer';
+
+import api from '../../services/api';
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -49,7 +43,39 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
 
+  const history = useHistory();
+
+  const [email, setEmail ] = useState('');
+  const [password, setPassword ] = useState('');
+
+  async function handleLogin(e){
+    e.preventDefault();
+
+    const data = {
+      email,
+      password
+    }
+
+    await api.post('session',data)
+    .then( response =>{
+
+        const { firstname } = response.data.user;
+        const { token } = response.data;
+
+        localStorage.setItem('token',token);
+        localStorage.setItem('name',firstname);
+
+        history.push('/');
+    })
+    .catch(error => {
+
+      alert(error.response.data.error)
+
+  })
+  };
+
   return (
+    <div>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -59,7 +85,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleLogin}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -70,6 +96,8 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -81,6 +109,8 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -102,7 +132,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/register" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
@@ -110,8 +140,10 @@ export default function SignIn() {
         </form>
       </div>
       <Box mt={8}>
-        <Copyright />
+        
       </Box>
     </Container>
+    <Footer />
+    </div>
   );
 }
