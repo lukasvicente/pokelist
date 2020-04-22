@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuAppBar() {
   const classes = useStyles();
+  const history = useHistory();
+
   const auth = localStorage.getItem('token');
   const name = localStorage.getItem('name');
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -44,6 +46,7 @@ export default function MenuAppBar() {
   const handleClear = () => {
     localStorage.clear();
     window.location.reload();
+    history.push("/");
   };
 
   return (
